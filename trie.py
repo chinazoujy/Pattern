@@ -3,27 +3,19 @@
 
 import collections as _collections
 
+def node_print(current_node, current_str):
+    if len(current_node.children) == 0:
+        print (current_str)
+
+    for k,v in current_node.children.items():
+        current_str += k
+        node_print(v, current_str)
+        current_str = current_str[0:-1]
+
 class TrieNode(object):
     def __init__(self) -> None:
         self.children = _collections.defaultdict(TrieNode)
         self.is_word = False
-    
-    def __repr__(self) -> str:
-        s = ''
-        first = True
-        for k, v in self.children.items():
-            if first:
-                if v.is_word:
-                    s += '{} -> {}\n'.format(k, v)
-                else:
-                    s += '{} -> {}'.format(k, v)
-                first = False
-                continue
-            if v.is_word:
-                s += '{}\n'.format(k)
-            else:
-                s += '{} -> {}'.format(k, v)
-        return s
 
 class Trie(object):
     def __init__(self) -> None:
@@ -51,9 +43,6 @@ class Trie(object):
                 return False
         return True    
 
-    def __repr__(self) -> str:
-        return repr(self.root).replace("\n\n", "\n").replace("\n\n", "\n")
-
     def find_one(self, word) -> str:
         for i in range(len(word)):
             node = self.root.children.get(word[i])
@@ -69,13 +58,17 @@ class Trie(object):
 
 if __name__ == "__main__":
     t = Trie()
-    t.insert("天安门")
-    t.insert("广渠门")
-    t.insert("西直门")
-    t.insert("西弯门")
+    t.insert("123")
+    t.insert("456")
+    t.insert("451")
+    t.insert("789")
 
-    print(t)
+    node_print(t.root, "")
 
+    query = "123qqqqq"
+    print (t.search(query))
+    print (t.starts_with(query))
+    
 
 
 
