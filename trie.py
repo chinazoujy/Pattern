@@ -3,6 +3,7 @@
 
 import collections as _collections
 
+# dfs
 def node_print(current_node, current_str):
     if len(current_node.children) == 0:
         print (current_str)
